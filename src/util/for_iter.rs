@@ -34,10 +34,10 @@ util_float! { f32 f64 }
 
 #[test]
 fn test() {
-    let v64: Vec<i64> = vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-    let v32: Vec<i32> = vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-    let f32: Vec<f32> = vec![1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0];
-    assert_eq!(v64.into_iter().sum::<i64>(), 55);
-    assert_eq!(v32.into_iter().product::<i32>(), 3628800);
-    assert_eq!(f32.into_iter().sum::<f32>(), 55.0);
+    let vi64: Vec<i64> = vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    let vi32: Vec<i32> = vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    let vf32: Vec<f32> = vec![1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0];
+    assert_eq!(vi64.into_iter().sum::<i64>(), 55);
+    assert_eq!(vi32.into_iter().product::<i32>(), 3628800);
+    assert_eq!(vf32.into_iter().sum::<f32>(), 55.0);
 }

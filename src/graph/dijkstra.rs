@@ -1,14 +1,17 @@
 use std::collections::BinaryHeap;
 
 const INF: i64 = std::i64::MAX;
+
+#[derive(Debug)]
 struct Graph {
+    node: usize,
     directed: bool,
     graph: Vec<Vec<(usize, i64)>>,
 }
 
 impl Graph {
-    fn new(node: usize, flag: bool) -> Graph {
-        Graph { directed: flag, graph: vec![vec![(0, 0)]; node] }
+    fn new(n: usize, flag: bool) -> Graph {
+        Graph { node: n, directed: flag, graph: vec![vec![]; n] }
     }
 
     fn add_edge(&mut self, start_node: usize, end_node: usize, cost: i64) -> () {
@@ -16,33 +19,25 @@ impl Graph {
         if !self.directed { self.graph[end_node].push((start_node, cost)); }
     }
     fn dijkstra(&self, start_node: usize) -> Vec<i64> {
-        let node = self.graph[0].len();
-        let mut dist = vec![INF; node];
+        let mut dist = vec![INF; self.node];
         dist[start_node] = 0;
 
-        let mut prev = vec![0; node];
         let mut queue: BinaryHeap<(i64, usize)> = BinaryHeap::new();
-
-        queue.push((dist[start_node], start_node));
+        queue.push((0, start_node));
 
         while !queue.is_empty() {
-            let (dist_u, u) = queue.pop().unwrap();
-
-            if dist[u] < dist_u {
+            let (min_dist, idx) = queue.pop().unwrap();
+            if dist[idx] < -min_dist {
                 continue;
             }
-
-            for &(v, weight) in &self.graph[u] {
-                let alt = dist_u + weight;
-                if dist[v] > alt {
-                    dist[v] = alt;
-                    prev[v] = u;
-                    queue.push((alt, v));
+            for &(to, weight) in &self.graph[idx] {
+                let cost_cand = dist[idx] + weight;
+                if dist[to] > cost_cand {
+                    dist[to] = cost_cand;
+                    queue.push((-cost_cand, to));
                 }
             }
-        };
+        }
         dist
     }
 }
-
-
